@@ -31,12 +31,12 @@ namespace GoogleCloudSamples.Bigtable
                 // Read a row from my-table using a row key
                 Row row = bigtableClient.ReadRow(new TableName(projectId, instanceId, tableId), "r1", RowFilters.CellsPerRowLimit(1));
                 // Print the row key and data (column value, labels, timestamp)
-                Console.WriteLine($"Row key: {row.Key.ToStringUtf8()}" +
-                                  $"  Column Family: {row.Families[0].Name}" +
-                                  $"    Column Qualifyer: {row.Families[0].Columns[0]}" +
-                                  $"      Value: {row.Families[0].Columns[0].Cells[0].Value.ToStringUtf8()}" +
-                                  $"      Labels: {row.Families[0].Columns[0].Cells[0].Labels}" +
-                                  $"      Timestamp: {row.Families[0].Columns[0].Cells[0].TimestampMicros}");
+                Console.WriteLine($"{"Row key:",-30}{row.Key.ToStringUtf8()}\n" +
+                                  $"{"  Column Family:",-30}{row.Families[0].Name}\n" +
+                                  $"{"    Column Qualifyer:",-30}{row.Families[0].Columns[0].Qualifier.ToStringUtf8()}\n" +
+                                  $"{"      Value:",-30}{row.Families[0].Columns[0].Cells[0].Value.ToStringUtf8()}\n" +
+                                  $"{"      Labels:",-30}{row.Families[0].Columns[0].Cells[0].Labels}\n" +
+                                  $"{"      Timestamp:",-30}{row.Families[0].Columns[0].Cells[0].TimestampMicros}\n");
             }
             catch (Exception ex)
             {
