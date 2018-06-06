@@ -273,11 +273,11 @@ namespace GoogleCloudSamples.Bigtable
     {
         public static object CreateProdSsdInstance(string projectId, string displayName)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Create_Ssd_Instance]
+            // [START bigtable_create_Ssd_Instance]
             displayName += " SSD Prod";
             string instanceId = Regex.Replace(displayName, @"[^A-Za-z0-9_\.~]+", "-").ToLower();
             string zone = "us-east1-b";
@@ -295,7 +295,7 @@ namespace GoogleCloudSamples.Bigtable
                 ServeNodes = 3
             };
             // Initialize request argument(s).
-            CreateInstanceRequest createInstanceRequest = new CreateInstanceRequest
+            CreateInstanceRequest request = new CreateInstanceRequest
             {  
                 ParentAsProjectName = new ProjectName(projectId),
                 Instance = myInstance,
@@ -307,7 +307,7 @@ namespace GoogleCloudSamples.Bigtable
             {
                 // Make a request.
                 Operation<Instance, CreateInstanceMetadata> createInstanceResponse =
-                    bigtableInstanceAdminClient.CreateInstance(createInstanceRequest);
+                    bigtableInstanceAdminClient.CreateInstance(request);
                 Console.WriteLine("Waiting for operation to complete...");
 
                 // Poll until the returned long-running operation is complete
@@ -322,17 +322,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while creating {displayName} instance");
                 Console.WriteLine(ex.Message);
             }
-            // [END Create_Ssd_Instance}
+            // [END bigtable_create_Ssd_Instance}
             return 0;
         }
 
         public static object CreateDevHddInstance(string projectId, string displayName)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Create_Hdd_Instance]
+            // [START bigtable_create_Hdd_Instance]
             displayName += " HDD Dev";
             string instanceId = Regex.Replace(displayName, @"[^A-Za-z0-9_\.~]+", "-").ToLower();
             string zone = "us-east1-b";
@@ -376,17 +376,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while creating {displayName} instance");
                 Console.WriteLine(ex.Message);
             }
-            // [END Create_Ssd_Instance}
+            // [END bigtable_create_Ssd_Instance}
             return 0;
         }
 
         public static object CreateTwoClusterInstance(string projectId, string displayName)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Create_Ssd_Instance]
+            // [START bigtable_create_Ssd_Instance]
             displayName += " Two Cluster";
             string instanceId = Regex.Replace(displayName, @"[^A-Za-z0-9_\.~]+", "-").ToLower();
             string zone1 = "us-east1-b";
@@ -444,17 +444,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while creating {displayName} instance");
                 Console.WriteLine(ex.Message);
             }
-            // [END Create_Ssd_Instance}
+            // [END bigtable_create_Ssd_Instance}
             return 0;
         }
 
         public static object ListInstances(string projectId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START list_instances]
+            // [START bigtable_list_instances]
             // Initialize request argument(s).
             ListInstancesRequest listInstancesRequest = new ListInstancesRequest
             {
@@ -479,17 +479,17 @@ namespace GoogleCloudSamples.Bigtable
                 return -1;
             }
             Console.WriteLine(new string('-', 50));
-            // [END list_instances]
+            // [END bigtable_list_instances]
             return 0;
         }
 
         public static object GetInstance(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Get_instance]
+            // [START bigtable_get_instance]
             // Initialize request argument(s).
             GetInstanceRequest request = new GetInstanceRequest
             {
@@ -507,19 +507,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception retreiving {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
+            // [END bigtable_get_instance]
             return 0;
         }
 
         public static object UpdateInstanceDisplayName(string projectId, string instanceId, string newDisplayName)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Update_InstanceDisplayName]
+            // [START bigtable_update_instance_displayName]
             // Create an instance object with new display name.
             Instance currentInstance = new Instance
             {
@@ -556,20 +557,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_update_instance_displayName]
             return 0;
         }
 
         public static object UpgradeInstanceToProd(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Update_InstanceDisplayName]
+            // [START bigtable_upgrade_instance_to_prod]
             // Create instance object with type changed to `PRODUCTION`.
             Instance currentInstance = new Instance
             {
@@ -605,20 +606,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception upgrading {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_upgrade_instance_to_prod]
             return 0;
         }
 
         public static object UpdateInstanceMultipleFields(string projectId, string instanceId, string newDisplayName)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Update_InstanceDisplayName]
+            // [START bigtable_update_unstance_multiple_fields]
             // Create an instance object with new display name.
             Instance currentInstance = new Instance
             {
@@ -657,20 +658,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_update_unstance_multiple_fields]
             return 0;
         }
         
         public static object AddLabels(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Add_Labels]
+            // [START bigtable_add_labels]
             // Get an instance object which labels need to be updated.
             GetInstanceRequest request = new GetInstanceRequest
             {
@@ -678,12 +679,6 @@ namespace GoogleCloudSamples.Bigtable
             };
             Instance currentInstance = bigtableInstanceAdminClient.GetInstance(request);
 
-            // TODO: Instead of try-catch block below I may add labels in the following way?
-            /*
-             * The following will add a label if key doesn't exist or update a value of an exisitng key.
-             * currentInstance.Labels["type"] = "dotnet";
-             * currentInstance.Labels["test"] = "bigtable";             *
-             */
             // Add labels.
             try
             {
@@ -724,22 +719,22 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_add_labels]
             return 0;
         }
 
         public static object UpdateLabels(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
             string labelKey = "test";
             string labelNewValue = "bigtable-example";
-            // [START Add_Labels]
+            // [START bigtable_update_labels]
             // Get an instance object which labels need to be updated.
             GetInstanceRequest request = new GetInstanceRequest
             {
@@ -779,20 +774,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_update_labels]
             return 0;
         }
 
         public static object DeleteLabels(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Add_Labels]
+            // [START bigtable_delete_labels]
             // Create an instance object with an empty fiels labels.
             Instance currentInstance = new Instance
             {
@@ -829,17 +824,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_delete_labels]
             return 0;
         }
 
         public static object DeleteInstance(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Delete_instance]
+            // [START bigtable_delete_instance]
             // Initialize request argument(s).
             DeleteInstanceRequest request = new DeleteInstanceRequest
             {
@@ -857,19 +852,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while deleting {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
+            // [END bigtable_delete_instance]
             return 0;
         }
 
         public static object CreateCluster(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START Create_cluster]
+            // [START bigtable_create_cluster]
             Cluster myCluster2 = new Cluster
             { 
                 DefaultStorageType = StorageType.Ssd,
@@ -899,18 +895,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception creating additional cluster {request.ClusterId} in instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END Craete_cluster]
+            // [END bigtable_create_cluster]
 
             return 0;
         }
 
         public static object GetCluster(string projectId, string instanceId, string clusterId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START Get_Cluster]
+            // [START bigtable_get_cluster]
             // Initialize request argument(s)
             GetClusterRequest getClusterRequest = new GetClusterRequest
             {
@@ -929,17 +925,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception getting cluster {clusterId} from instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END Get_Cluster]
+            // [END bigtable_get_cluster]
             return 0;
         }
 
         public static object ListAllClusters(string projectId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START list_Clusters]
+            // [START bigtable_list_all_clusters]
             // Initialize request argument(s)
             ListClustersRequest listClustersRequest = new ListClustersRequest
             {
@@ -962,18 +958,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while requesting information about clusters in {projectId} project");
                 Console.WriteLine(ex.Message);
             }
-            // [END list_Clusters]
+            // [END bigtable_list_all_clusters]
 
             return 0;
         }
         
         public static object ListClusters(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START list_Clusters]
+            // [START bigtable_list_clusters]
             // Initialize request argument(s)
             ListClustersRequest listClustersRequest = new ListClustersRequest
             {
@@ -996,20 +992,20 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while requesting information about clusters in {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-            // [END list_Clusters]
+            // [END bigtable_list_clusters]
 
             return 0;
         }
 
         public static object UpdateClusterNodeCount(string projectId, string instanceId, string clusterId, int nodes)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             Console.WriteLine($"Current {clusterId} cluster info");
             GetCluster(projectId, instanceId, clusterId);
-            // [START update_Cluster_Node_Count]
+            // [START bigtable_update_cluster_node_count]
             // Initialize request argument(s)
             Cluster updatedCluster = new Cluster
             {
@@ -1037,21 +1033,21 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while updating cluster {clusterId} in {instanceId} instance");
                 Console.WriteLine(ex.Message);
             }
-            // [END update_Cluster_Node_Count]
+            // [END bigtable_update_cluster_node_count]
             return 0;
         }
 
         public static object DeleteCluster(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
 
             // Print current instance information
             GetInstance(projectId, instanceId);
 
-            // [START delete_Cluster]
+            // [START bigtable_delete_cluster]
             // Initialize request argument(s)
             DeleteClusterRequest request = new DeleteClusterRequest
             {
@@ -1070,17 +1066,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception deleting cluster {request.ClusterName.ClusterId} from instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END delete_cluster]
+            // [END bigtable_delete_cluster]
             return 0;
         }
 
         public static object CreateAppProfile(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START create_AppPrifile]
+            // [START bigtable_create_appPrifile]
             // Create an AppProfile object
             AppProfile testAppProfile = new AppProfile
             {
@@ -1112,18 +1108,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception creating appProfile {testAppProfile.Name} instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END create_AppProfile]
+            // [END bigtable_create_appPrifile]
 
             return 0;
         }
 
         public static object GetAppProfile(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START create_AppPrifile]
+            // [START bigtable_get_appPrifile]
             // Initialize request argument(s)
             GetAppProfileRequest request = new GetAppProfileRequest
             {
@@ -1142,18 +1138,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception retreaving appProfile {request.AppProfileName.AppProfileId} from instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END createAppProfile]
+            // [END bigtable_get_appPrifile]
 
             return 0;
         }
 
         public static object ListAppProfiles(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START create_AppPrifile]
+            // [START bigtable_list_appPrifiles]
             // Initialize request argument(s)
             ListAppProfilesRequest request = new ListAppProfilesRequest
             {
@@ -1176,18 +1172,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception while requesting information about appProfiles on instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END delete_cluster]
+            // [END bigtable_list_appPrifiles]
 
             return 0;
         }
 
         public static object UpdateAppProfile(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START create_AppPrifile]
+            // [START bigtable_update_appPrifile]
             // Create an AppProfile object
             GetAppProfileRequest getRequest = new GetAppProfileRequest
             {
@@ -1233,18 +1229,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception updating appProfile on instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END create_AppProfile]
+            // [END bigtable_update_appPrifile]
 
             return 0;
         }
 
         public static object DeleteAppProfile(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START create_AppPrifile]
+            // [START bigtable_delete_appPrifile]
             // Initialize request argument(s)
             DeleteAppProfileRequest request = new DeleteAppProfileRequest
             {
@@ -1263,18 +1259,18 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception deleting appProfile {request.AppProfileName.AppProfileId} from instance {instanceId}");
                 Console.WriteLine(ex.Message);
             }
-            // [END create_AppProfile]
+            // [END bigtable_delete_appPrifile]
 
             return 0;
         }
 
-        public static object GetProjectIamPolicy(string projectId, string instanceId)
+        public static object GetInstanceIamPolicy(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START get_IamPolicy]
+            // [START bigtable_get_instance_iamPolicy]
             // Initialize request argument(s)
             GetIamPolicyRequest request = new GetIamPolicyRequest
             {
@@ -1294,17 +1290,17 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception retreiving IamPolicy from instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_get_instance_iamPolicy]
             return 0;
         }
 
         public static object SetInstanceIamPolicy(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
-            // [START set_IamPolicy]
+            // [START bigtable_set_instance_iamPolicy]
             // Initialize request argument(s)
             SetIamPolicyRequest request = new SetIamPolicyRequest
             {
@@ -1332,15 +1328,15 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception setting IamPolicy");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtable_set_instance_iamPolicy]
             return 0;
         }
 
         public static object TestIamPermissions(string projectId, string instanceId)
         {
-            // [START create_bigtableInstanceAdminClient]
+            // [START bigtable_create_bigtableInstanceAdminClient]
             BigtableInstanceAdminClient bigtableInstanceAdminClient = BigtableInstanceAdminClient.Create();
-            // [END create_bigtableInstanceAdminClient]
+            // [END bigtable_create_bigtableInstanceAdminClient]
 
             var permissions = new List<string>
             {
@@ -1350,7 +1346,7 @@ namespace GoogleCloudSamples.Bigtable
                 "bigtable.instances.setIamPolicy",
             };
 
-            // [START test_IamPermissions]
+            // [START bigtble_test_iamPermissions]
             // Initialize request argument(s)
             TestIamPermissionsRequest request = new TestIamPermissionsRequest
             {
@@ -1382,7 +1378,7 @@ namespace GoogleCloudSamples.Bigtable
                 Console.WriteLine($"Exception retreiving IamPolicy from instance");
                 Console.WriteLine(ex.Message);
             }
-
+            // [END bigtble_test_iamPermissions]
             return 0;
         }
 
@@ -1478,7 +1474,7 @@ namespace GoogleCloudSamples.Bigtable
                 .Add((ListAppProfilesOptions opts) => ListAppProfiles(opts.projectId, opts.instanceId))
                 .Add((UpdateAppProfileOptions opts) => UpdateAppProfile(opts.projectId, opts.instanceId))
                 .Add((DeleteAppProfileOptions opts) => DeleteAppProfile(opts.projectId, opts.instanceId))
-                .Add((GetInstancetIamPolicyOptions opts) => GetProjectIamPolicy(opts.projectId, opts.instanceId))
+                .Add((GetInstancetIamPolicyOptions opts) => GetInstanceIamPolicy(opts.projectId, opts.instanceId))
                 .Add((SetInstanceIamPolicyOptions opts) => SetInstanceIamPolicy(opts.projectId, opts.instanceId))
                 .Add((TestIamPermissionsOptions opts) => TestIamPermissions(opts.projectId, opts.instanceId))
                 .NotParsedFunc = (err) => 1;
